@@ -1,0 +1,82 @@
+.rlWrapper {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 100%;
+  z-index: 101;
+}
+.rlWrapper .rlDiv {
+  background: #2b2828;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 0 0 1px #2b2828;
+}
+@media (max-width: 768px) {
+  .rlWrapper .rlDiv {
+    background: none;
+    box-shadow: none;
+  }
+}
+.rlWrapper .rlHeader {
+  font-weight: "bold";
+  margin-top: 45px;
+  font-size: 20px;
+}
+.rlWrapper .rl {
+  width: 302px;
+  height: 100%;
+}
+@media (max-width: 768px) {
+  .rlWrapper .rl {
+    width: 350px;
+  }
+}
+.rlWrapper .rl form {
+  height: 100%;
+}
+.rlWrapper .form-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 30px;
+  background: #494848;
+  margin-top: 6px;
+  color: white;
+  font-size: 15px;
+}
+.rlWrapper .form-label {
+  font-size: 14px;
+  margin-top: 15px;
+}
+.rlWrapper .oauthBlock {
+  width: 100%;
+  margin-top: 40px;
+  height: 40px;
+  background: #373535;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+}
+.rlWrapper .oauthBlock:hover {
+  background: #312f2f;
+}
+@media (max-width: 768px) {
+  .rlWrapper .oauthBlock {
+    height: 48px;
+  }
+}
+.rlWrapper .oauthBlock .icon {
+  height: 30px;
+  width: 30px;
+  margin-left: 20px;
+}
+.rlWrapper .oauthBlock .blockText {
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 20px;
+}/*# sourceMappingURL=pages.css.map */

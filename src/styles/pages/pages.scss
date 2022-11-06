@@ -1,0 +1,84 @@
+.rlWrapper {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 100%;
+    z-index: 101;
+
+    .rlDiv {
+        background: #2b2828;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        box-shadow: 0 0 0 1px #2b2828;
+        @media (max-width: 768px) {
+            background: none;
+            box-shadow: none;
+        }
+    }
+    .rlHeader {
+        font-weight: "bold";
+        margin-top: 45px;
+        font-size: 20px;
+    }
+
+    .rl {
+        width: 302px;
+        height: 100%;
+
+        @media (max-width: 768px) {
+            width: 350px;
+        }
+        form {
+            height: 100%;
+        }
+    }
+
+    .form-input {
+        border: none;
+        outline: none;
+        width: 100%;
+        height: 30px;
+        background: #494848;
+        margin-top: 6px;
+        color: white;
+        font-size: 15px;
+    }
+
+    .form-label {
+        font-size: 14px;
+        margin-top: 15px;
+    }
+
+    .oauthBlock {
+        width: 100%;
+        margin-top: 40px;
+        height: 40px;
+        background: #373535;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: 0.3s;
+        &:hover {
+            background: #312f2f;
+        }
+        display: flex;
+        align-items: center;
+
+        @media (max-width: 768px) {
+            height: 48px;
+        }
+        .icon {
+            height: 30px;
+            width: 30px;
+            margin-left: 20px;
+        }
+        .blockText {
+            font-weight: bold;
+            font-size: 16px;
+            margin-left: 20px;
+        }
+    }
+}

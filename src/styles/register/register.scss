@@ -1,0 +1,29 @@
+.registerWrapper {
+    .registerDiv {
+        height: 525px;
+        width: 400px;
+        @media (max-width: 768px) {
+            height: 90%;
+            min-height: 525px;
+        }
+        top: 35%;
+        transform: translateY(-35%);
+    }
+
+    .r-button {
+        margin-top: 20px;
+    }
+
+    .roauth {
+        margin-top: auto;
+        margin-bottom: 50px;
+        @media (max-width: 768px) {
+            margin-top: 50px;
+        }
+    }
+
+    .form-div {
+        height: 100%;
+        z-index: 1;
+    }
+}
