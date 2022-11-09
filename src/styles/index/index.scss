@@ -8,6 +8,10 @@ body,
     font-family: "Inter", sans-serif;
 }
 
+#root {
+    position: relative;
+}
+
 body {
     background: #1c1a1a;
     color: white;
@@ -23,4 +27,18 @@ body {
 }
 .column {
     flex-direction: column;
+}
+
+.modalDiv {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    width: 100%;
+    z-index: 102;
+}
+
+.higherModal {
+    z-index: 103;
 }

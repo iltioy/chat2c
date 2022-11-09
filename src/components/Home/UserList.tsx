@@ -1,5 +1,8 @@
 import { StyledUserList } from "./styled/UserList";
 import { IoMenuSharp } from "react-icons/io5";
+import { NavigateFunction, useNavigate } from "react-router";
+import { useAppDispatch } from "../../store/store";
+import { switchSlideMenu } from "../../features/modalHandles/modalSlice";
 
 const chatUsers = [
     {
@@ -135,11 +138,13 @@ const chatUsers = [
 interface ChatProps {
     chName: string;
     img: string;
+    id: number;
 }
 
-const SingleChat: React.FC<ChatProps> = ({ chName, img }) => {
+const SingleChat: React.FC<ChatProps> = ({ chName, img, id }) => {
+    const navigate: NavigateFunction = useNavigate();
     return (
-        <div className="singleChat">
+        <div className="singleChat" onClick={() => navigate(`/chat/${id}`)}>
             <div className="imageWrapper">
                 <img src={img} alt="" />
             </div>
@@ -148,18 +153,29 @@ const SingleChat: React.FC<ChatProps> = ({ chName, img }) => {
     );
 };
 
-const UserList = () => {
+interface Props {
+    isSmall: boolean;
+    chatClosed: boolean;
+}
+
+const UserList: React.FC<Props> = ({ isSmall, chatClosed }) => {
+    const dispatch = useAppDispatch();
     return (
-        <StyledUserList>
+        <StyledUserList display={chatClosed || !isSmall ? "block" : "none"}>
             <div className="userMenu">
-                <IoMenuSharp className="icon" />
+                <IoMenuSharp
+                    className="icon"
+                    onClick={() => dispatch(switchSlideMenu())}
+                />
             </div>
             <div className="chatWrapper">
-                {chatUsers.map((chat) => {
+                {chatUsers.map((chat, index) => {
                     return (
                         <SingleChat
+                            key={index}
                             chName={chat.name}
                             img={chat.img}
+                            id={index}
                         ></SingleChat>
                     );
                 })}

@@ -4,6 +4,11 @@ export const StyledUserList = styled.div`
     max-height: 100%;
     overflow: auto;
     width: 325px;
+    display: ${({ display }) => display};
+
+    @media (max-width: 768px) {
+        width: 100%;
+    }
 
     .userMenu {
         height: 50px;
@@ -32,7 +37,7 @@ export const StyledUserList = styled.div`
 
         .name {
             margin-top: 8px;
-            margin-left: 5px;
+            margin-left: 9px;
             font-weight: bold;
             font-size: 18px;
         }

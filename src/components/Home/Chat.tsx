@@ -1,9 +1,15 @@
 import { StyledChat } from "./styled/Chat.styled";
 import { HiOutlinePaperClip } from "react-icons/hi";
+import MainChat from "./MainChat";
 
-const Chat = () => {
+interface Props {
+    isSmall: boolean;
+    chatClosed: boolean;
+}
+
+const Chat: React.FC<Props> = ({ isSmall, chatClosed }) => {
     return (
-        <StyledChat>
+        <StyledChat display={chatClosed ? "none" : "flex"}>
             <div className="topper">
                 <div className="wrap">
                     <div>Name</div>
@@ -11,7 +17,9 @@ const Chat = () => {
                 </div>
             </div>
 
-            <div className="mainChat"></div>
+            <div className="mainChat">
+                <MainChat />
+            </div>
 
             <div className="footer">
                 <label htmlFor="chatFile">
@@ -24,10 +32,10 @@ const Chat = () => {
                     id="chatFile"
                     className="chatFileInput"
                 />
+
                 <textarea
                     placeholder="Write a message..."
                     className="chatInput"
-                    rows={1}
                 />
             </div>
         </StyledChat>
