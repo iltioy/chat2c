@@ -22,11 +22,11 @@ export const StyledSliderButton = styled.div`
         align-items: center;
 
         .icon {
-            width: 23px;
-            height: 23px;
+            width: 20px;
+            height: 20px;
             background: ${({ iconBackground }) => iconBackground};
             color: ${({ iconColor }) => iconColor};
-            padding: 2px;
+            padding: 3.5px;
             border-radius: 5px;
         }
 

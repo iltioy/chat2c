@@ -6,10 +6,23 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "./store/store";
+import { getUserInfo } from "./features/auth/authSlice";
+import { useAppDispatch } from "./store/store";
 
 function App() {
     const { pathname }: Location = useLocation();
     const navigate: NavigateFunction = useNavigate();
+    const dispatch = useAppDispatch();
+
+    const { token, isLoaded } = useSelector((state: RootState) => state.auth);
+
+    useEffect(() => {
+        if (token !== "" && !isLoaded) {
+            dispatch(getUserInfo(token));
+        }
+    }, [token]);
 
     useEffect(() => {
         // redirect to proper path

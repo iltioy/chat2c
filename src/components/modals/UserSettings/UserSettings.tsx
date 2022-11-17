@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Modal from "../Modal";
 import { switchUserSettings } from "../../../features/modalHandles/modalSlice";
 import { useSelector } from "react-redux";
@@ -10,18 +11,31 @@ const UserSettings = () => {
     const { userSettingsActive } = useSelector(
         (state: RootState) => state.modal
     );
+
+    const { user } = useSelector((state: RootState) => state.auth);
+
+    const [site, setSite] = useState("main");
+
+    const sites = new Map([
+        ["main", <Main setSite={setSite} user={user} />],
+        ["info", <Info setSite={setSite} user={user} />],
+    ]);
+
     return (
-        <StyledUserSettings>
+        <>
             {userSettingsActive ? (
-                <>
-                    <Modal
-                        className="modalDiv higherModal"
-                        actionOnDispatch={switchUserSettings}
-                    />
-                    <Info />
-                </>
+                <StyledUserSettings>
+                    <>
+                        <Modal
+                            className="modalDiv higherModal"
+                            actionOnDispatch={switchUserSettings}
+                        />
+
+                        {sites.get(site)}
+                    </>
+                </StyledUserSettings>
             ) : null}
-        </StyledUserSettings>
+        </>
     );
 };
 

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+const greyBorder = "#303a42";
+
 export const StyledUserSettings = styled.div`
     position: absolute;
     width: 100%;
@@ -24,6 +26,11 @@ export const StyledUserSettings = styled.div`
                 color: white;
                 padding: 12px;
                 margin-top: 10px;
+            }
+
+            .descInputDiv {
+                border-bottom: 10px solid ${greyBorder};
+                margin-bottom: 5px;
             }
 
             .upper {
@@ -96,7 +103,7 @@ export const StyledUserSettings = styled.div`
     .settingsWrapperMain {
         .topper {
             padding-bottom: 30px;
-            border-bottom: 10px solid #303a42;
+            border-bottom: 10px solid ${greyBorder};
             margin-bottom: 5px;
             .upper {
                 height: 60px;

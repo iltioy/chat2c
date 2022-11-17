@@ -1,19 +1,57 @@
 import "../styles/login/loginPage.css";
 import { StyledButton } from "../components/styled/Button.styled";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { login } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const [error, setError] = useState("");
+
+    const { handleSubmit, handleChange, values, errors } = useFormik({
+        initialValues: {
+            username: "",
+            password: "",
+        },
+        validationSchema: Yup.object({
+            username: Yup.string().max(15).min(3).required(),
+            password: Yup.string().max(15).min(3).required(),
+        }),
+        validateOnChange: false,
+        validateOnBlur: false,
+        onSubmit: async (values) => {
+            const res = await dispatch(login(values));
+
+            if (!res.error) {
+                navigate("/chat/0");
+            } else {
+                setError(res.error);
+            }
+        },
+    });
+
     return (
         <div className="loginWrapper rlWrapper">
             <div className="loginDiv rlDiv">
                 <div className="login flex column rl">
-                    <form action="" className="flex column">
+                    <form
+                        action=""
+                        className="flex column"
+                        onSubmit={handleSubmit}
+                    >
                         <div className="rlHeader">Вход в аккаунт</div>
                         <label htmlFor="username" className="form-label">
                             Логин:
                         </label>
                         <input
+                            value={values.username}
+                            onChange={handleChange}
                             type="text"
                             id="username"
                             name="username"
@@ -23,6 +61,8 @@ const Login = () => {
                             Пароль:
                         </label>
                         <input
+                            value={values.password}
+                            onChange={handleChange}
                             type="password"
                             id="password"
                             name="password"

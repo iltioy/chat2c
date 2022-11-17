@@ -6,13 +6,13 @@ import { switchSlideMenu } from "../../features/modalHandles/modalSlice";
 import Modal from "../modals/Modal";
 import { useAppDispatch } from "../../store/store";
 import { switchUserSettings } from "../../features/modalHandles/modalSlice";
-
 import { IoMdSettings } from "react-icons/io";
 import { HiUsers } from "react-icons/hi";
 
 const SlideMenu = () => {
     const dispatch = useAppDispatch();
     const { slideMenuActive } = useSelector((state: RootState) => state.modal);
+    const { user } = useSelector((state: RootState) => state.auth);
 
     return (
         <StyledSlideMenu>
@@ -26,11 +26,8 @@ const SlideMenu = () => {
             <div className={`slideMenu ${slideMenuActive ? "" : "hidden"}`}>
                 <div className="topper">
                     <div className="topperDiv">
-                        <img
-                            src="https://zhizn-zvezd.ru/wp-content/uploads/2019/11/Певица-Дора-Дарья-Шиханова-биография-личная-жизнь-песни-2.jpg"
-                            alt=""
-                        />
-                        <div className="name">Artem</div>
+                        <img src={user.img} alt="" />
+                        <div className="name">{user.name}</div>
                     </div>
                 </div>
                 <div className="mainSlide">

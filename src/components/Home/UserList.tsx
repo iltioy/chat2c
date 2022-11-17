@@ -3,6 +3,7 @@ import { IoMenuSharp } from "react-icons/io5";
 import { NavigateFunction, useNavigate } from "react-router";
 import { useAppDispatch } from "../../store/store";
 import { switchSlideMenu } from "../../features/modalHandles/modalSlice";
+import { chat } from "../../types";
 
 const chatUsers = [
     {
@@ -156,10 +157,12 @@ const SingleChat: React.FC<ChatProps> = ({ chName, img, id }) => {
 interface Props {
     isSmall: boolean;
     chatClosed: boolean;
+    chats: [] | chat[];
 }
 
-const UserList: React.FC<Props> = ({ isSmall, chatClosed }) => {
+const UserList: React.FC<Props> = ({ isSmall, chatClosed, chats }) => {
     const dispatch = useAppDispatch();
+
     return (
         <StyledUserList display={chatClosed || !isSmall ? "block" : "none"}>
             <div className="userMenu">
@@ -169,12 +172,12 @@ const UserList: React.FC<Props> = ({ isSmall, chatClosed }) => {
                 />
             </div>
             <div className="chatWrapper">
-                {chatUsers.map((chat, index) => {
+                {chats.map((chat, index) => {
                     return (
                         <SingleChat
                             key={index}
-                            chName={chat.name}
-                            img={chat.img}
+                            chName={chat.user.name}
+                            img={chat.user.img}
                             id={index}
                         ></SingleChat>
                     );

@@ -5,6 +5,7 @@ export const StyledUserList = styled.div`
     overflow: auto;
     width: 325px;
     display: ${({ display }) => display};
+    border-right: 1px solid #555;
 
     @media (max-width: 768px) {
         width: 100%;
