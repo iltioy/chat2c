@@ -5,7 +5,7 @@ interface chatUser {
     img: string;
 }
 
-export interface chat {
+export interface ChatType {
     _id: string;
     lastMessage?: string;
     user: chatUser;

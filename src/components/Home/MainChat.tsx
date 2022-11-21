@@ -1,36 +1,57 @@
 import { useRef, useEffect } from "react";
 import { useParams } from "react-router";
+import { MessagesType } from "../../features/chat/types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+interface MessageProps {
+    body: string;
+    messageUserId: string;
+    mainUserId: string;
+}
 
-const Message: React.FC = () => {
+const Message: React.FC<MessageProps> = ({
+    body,
+    messageUserId,
+    mainUserId,
+}) => {
+    console.log(messageUserId, mainUserId);
     return (
-        <div className="messageDiv  my-message">
-            <div className="message">
-                asddgkjdhgdfkjgkjdfhgjkhdfkjgh Lorem ipsum dolor sit amet,
-                consectetur adipisicing elit. Eveniet porro est delectus
-                consequuntur sequi culpa sunt labore officia vel magnam, nisi
-                deleniti possimus quaerat praesentium, nam rem quas assumenda?
-                Nesciunt.s
-            </div>
+        <div
+            className={`messageDiv  ${
+                messageUserId === mainUserId ? "my-message" : "not-my-message"
+            }`}
+        >
+            <div className="message">{body}</div>
         </div>
     );
 };
 
-const MainChat = () => {
+interface MainChatProps {
+    messages: [] | MessagesType[];
+}
+
+const MainChat: React.FC<MainChatProps> = ({ messages }) => {
     const { id } = useParams();
     const scrollRef = useRef<HTMLDivElement>(null);
 
+    const { userId } = useSelector((state: RootState) => state.auth.user);
+
     useEffect(() => {
         scrollRef.current?.scrollIntoView();
-    }, [scrollRef, id]);
+    }, [scrollRef, id, messages]);
     return (
         <div className="mainChatDiv">
             <div ref={scrollRef}></div>
-            <Message />
-            <Message />
-            <Message />
-            <Message />
-            <Message />
-            <Message />
+            {messages.map((message) => {
+                return (
+                    <Message
+                        body={message.body}
+                        key={message._id}
+                        messageUserId={message.userId}
+                        mainUserId={userId}
+                    />
+                );
+            })}
         </div>
     );
 };

@@ -4,19 +4,40 @@ import UserList from "../components/Home/UserList";
 import { useParams } from "react-router";
 import SlideMenu from "../components/Home/SlideMenu";
 import UserSettings from "../components/modals/UserSettings/UserSettings";
+import CreateChat from "../components/modals/CreateChat/CreateChat";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { RootState } from "../store/store";
+import { ChatType } from "../types";
+import _ from "lodash";
+import * as io from "socket.io-client";
+const socket = io.connect("http://localhost:5000");
 
 const Home: React.FC = () => {
     const { id } = useParams();
     const { token } = useSelector((state: RootState) => state.auth);
 
-    const [chats, setChats] = useState([]);
+    const [chats, setChats] = useState<ChatType[] | []>([]);
+    console.log(chats);
+    useEffect(() => {
+        socket.emit("join_personal_room", { token });
+        socket.on("recieve_chat", ({ chat }) => {
+            if (chat) {
+                setChats((prevState) => {
+                    const chatInState = prevState.filter(
+                        (item) => item._id === chat._id
+                    );
+                    if (!_.isEmpty(chatInState)) {
+                        return [...prevState];
+                    }
+                    return [chat, ...prevState];
+                });
+            }
+        });
+    }, []);
 
     const getAllChats = async () => {
-        console.log("123");
         try {
             const res = await axios.get("/api/v1/chat/chats", {
                 headers: {
@@ -40,13 +61,20 @@ const Home: React.FC = () => {
         <div className="homePageWrapper">
             <div className="flex row homePage">
                 <UserSettings />
+                <CreateChat token={token} setChats={setChats} socket={socket} />
                 <SlideMenu />
                 <UserList
                     isSmall={isSmall}
                     chatClosed={chatClosed}
                     chats={chats}
                 />
-                <Chat isSmall={isSmall} chatClosed={chatClosed} />
+                <Chat
+                    token={token}
+                    id={id}
+                    isSmall={isSmall}
+                    chatClosed={chatClosed}
+                    socket={socket}
+                />
             </div>
         </div>
     );

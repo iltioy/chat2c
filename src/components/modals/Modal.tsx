@@ -5,8 +5,9 @@ import { ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
 interface Props {
     actionOnDispatch?:
         | ActionCreatorWithoutPayload<"modal/switchSlideMenu">
-        | ActionCreatorWithoutPayload<"modal/switchUserSettings">;
-    className: string;
+        | ActionCreatorWithoutPayload<"modal/switchUserSettings">
+        | ActionCreatorWithoutPayload<"modal/siwtchCreateChat">;
+    className?: string;
 }
 
 const Modal: React.FC<Props> = ({ actionOnDispatch, className }) => {

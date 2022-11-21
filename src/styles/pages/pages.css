@@ -37,16 +37,6 @@
 .rlWrapper .rl form {
   height: 100%;
 }
-.rlWrapper .form-input {
-  border: none;
-  outline: none;
-  width: 100%;
-  height: 30px;
-  background: #494848;
-  margin-top: 6px;
-  color: white;
-  font-size: 15px;
-}
 .rlWrapper .form-label {
   font-size: 14px;
   margin-top: 15px;
@@ -79,4 +69,15 @@
   font-weight: bold;
   font-size: 16px;
   margin-left: 20px;
+}
+
+.form-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 30px;
+  background: #494848;
+  margin-top: 6px;
+  color: white;
+  font-size: 15px;
 }/*# sourceMappingURL=pages.css.map */

@@ -3,143 +3,12 @@ import { IoMenuSharp } from "react-icons/io5";
 import { NavigateFunction, useNavigate } from "react-router";
 import { useAppDispatch } from "../../store/store";
 import { switchSlideMenu } from "../../features/modalHandles/modalSlice";
-import { chat } from "../../types";
-
-const chatUsers = [
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-    {
-        name: "123",
-        img: "http://almode.ru/uploads/posts/2021-03/1616803817_29-p-eive-maks-30.jpg",
-    },
-];
+import { ChatType } from "../../types";
 
 interface ChatProps {
     chName: string;
     img: string;
-    id: number;
+    id: string;
 }
 
 const SingleChat: React.FC<ChatProps> = ({ chName, img, id }) => {
@@ -157,7 +26,7 @@ const SingleChat: React.FC<ChatProps> = ({ chName, img, id }) => {
 interface Props {
     isSmall: boolean;
     chatClosed: boolean;
-    chats: [] | chat[];
+    chats: [] | ChatType[];
 }
 
 const UserList: React.FC<Props> = ({ isSmall, chatClosed, chats }) => {
@@ -178,7 +47,7 @@ const UserList: React.FC<Props> = ({ isSmall, chatClosed, chats }) => {
                             key={index}
                             chName={chat.user.name}
                             img={chat.user.img}
-                            id={index}
+                            id={chat._id}
                         ></SingleChat>
                     );
                 })}

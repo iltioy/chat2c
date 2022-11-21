@@ -2,7 +2,10 @@ import { StyledSlideMenu } from "./styled/SlideMenu.styled";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import SliderButton from "./SliderButton";
-import { switchSlideMenu } from "../../features/modalHandles/modalSlice";
+import {
+    siwtchCreateChat,
+    switchSlideMenu,
+} from "../../features/modalHandles/modalSlice";
 import Modal from "../modals/Modal";
 import { useAppDispatch } from "../../store/store";
 import { switchUserSettings } from "../../features/modalHandles/modalSlice";
@@ -28,10 +31,11 @@ const SlideMenu = () => {
                     <div className="topperDiv">
                         <img src={user.img} alt="" />
                         <div className="name">{user.name}</div>
+                        <div className="username">@{user.username}</div>
                     </div>
                 </div>
                 <div className="mainSlide">
-                    <div>
+                    <div onClick={() => dispatch(siwtchCreateChat())}>
                         <SliderButton Icon={HiUsers} iconBackground="orange">
                             Новый чат
                         </SliderButton>

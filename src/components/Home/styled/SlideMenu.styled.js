@@ -35,6 +35,12 @@ export const StyledSlideMenu = styled.div`
                 margin-top: 15px;
                 margin-left: 5px;
             }
+            .username {
+                color: grey;
+                font-size: 14px;
+                margin-left: 5px;
+                margin-top: 4px;
+            }
         }
 
         .mainSlide {

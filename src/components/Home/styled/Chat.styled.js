@@ -48,39 +48,68 @@ export const StyledChat = styled.div`
                 justify-content: flex-end;
                 margin-right: 8px;
             }
+            .not-my-message {
+                margin-left: 8px;
+            }
 
             .message {
                 background: #363636;
                 word-wrap: break-word;
-                display: table;
                 max-width: 35%;
                 padding: 10px;
                 border-radius: 10px;
                 margin: 8px 0;
 
-                @media (max-width: 1280px) {
+                @media (max-width: 768px) {
                     max-width: 80px;
                 }
             }
         }
     }
 
+    .showFooter {
+        left: 0;
+        right: 0;
+    }
+
     .footer {
         height: 50px;
-        width: 100%;
         border-top: 1px solid #555;
         display: flex;
+        flex-flow: row;
         align-items: center;
         position: fixed;
         bottom: 0;
         background: #1c1a1a;
         z-index: 101;
 
+        @media (min-width: 769px) {
+            right: 0;
+            left: 326px;
+        }
+
         .icon {
             height: 25px;
             width: 40px;
             cursor: pointer;
             color: #555;
+        }
+        .sendIconDiv {
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            justify-content: cetner;
+            align-items: center;
+            margin-right: 20px;
+            @media (max-width: 768px) {
+                margin-right: 5px;
+            }
+            .sendIcon {
+                cursor: pointer;
+                height: 30px;
+                color: #555;
+                width: 30px;
+            }
         }
     }
 
@@ -93,8 +122,9 @@ export const StyledChat = styled.div`
         outline: none;
         border: none;
         color: white;
-        flex: 1;
         font-size: 17px;
+        flex: 1;
+
         height: 35px;
         align-self: flex-start;
         word-wrap: break-word;

@@ -2,6 +2,7 @@ export interface user {
     username: string;
     name: string;
     img: string;
+    userId: string;
 }
 
 export interface authState {

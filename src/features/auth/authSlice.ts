@@ -8,6 +8,7 @@ const initialState: authState = {
         username: "username",
         name: "name",
         img: "user.png",
+        userId: "",
     },
     isLoaded: false,
 };

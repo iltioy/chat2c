@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 interface initialStateType {
     slideMenuActive: boolean;
     userSettingsActive: boolean;
+    createChatActive: boolean;
 }
 
 const initialState: initialStateType = {
     slideMenuActive: false,
     userSettingsActive: false,
+    createChatActive: false,
 };
 
 const modalSlice = createSlice({
@@ -20,8 +22,12 @@ const modalSlice = createSlice({
         switchUserSettings: (state) => {
             state.userSettingsActive = !state.userSettingsActive;
         },
+        siwtchCreateChat: (state) => {
+            state.createChatActive = !state.createChatActive;
+        },
     },
 });
 
-export const { switchSlideMenu, switchUserSettings } = modalSlice.actions;
+export const { switchSlideMenu, switchUserSettings, siwtchCreateChat } =
+    modalSlice.actions;
 export default modalSlice.reducer;
