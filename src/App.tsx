@@ -22,6 +22,7 @@ function App() {
         if (token !== "" && !isLoaded) {
             dispatch(getUserInfo(token));
         }
+        // eslint-disable-next-line
     }, [token]);
 
     useEffect(() => {
@@ -29,6 +30,7 @@ function App() {
         if (pathname === "/" || pathname === "/chat") {
             navigate("/chat/0");
         }
+        // eslint-disable-next-line
     }, []);
 
     return (

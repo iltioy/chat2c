@@ -19,7 +19,6 @@ const Home: React.FC = () => {
     const { token } = useSelector((state: RootState) => state.auth);
 
     const [chats, setChats] = useState<ChatType[] | []>([]);
-    console.log(chats);
     useEffect(() => {
         socket.emit("join_personal_room", { token });
         socket.on("recieve_chat", ({ chat }) => {
@@ -35,6 +34,7 @@ const Home: React.FC = () => {
                 });
             }
         });
+        // eslint-disable-next-line
     }, []);
 
     const getAllChats = async () => {
@@ -51,6 +51,7 @@ const Home: React.FC = () => {
     };
     useEffect(() => {
         getAllChats();
+        // eslint-disable-next-line
     }, [token]);
 
     const screenWidth: number = window.innerWidth;

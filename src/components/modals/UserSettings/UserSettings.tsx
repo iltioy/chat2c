@@ -12,13 +12,13 @@ const UserSettings = () => {
         (state: RootState) => state.modal
     );
 
-    const { user } = useSelector((state: RootState) => state.auth);
+    const { user, token } = useSelector((state: RootState) => state.auth);
 
     const [site, setSite] = useState("main");
 
     const sites = new Map([
         ["main", <Main setSite={setSite} user={user} />],
-        ["info", <Info setSite={setSite} user={user} />],
+        ["info", <Info setSite={setSite} user={user} token={token} />],
     ]);
 
     return (

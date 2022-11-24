@@ -3,6 +3,7 @@ export interface user {
     name: string;
     img: string;
     userId: string;
+    bio: string;
 }
 
 export interface authState {

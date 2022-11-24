@@ -25,6 +25,7 @@ export const StyledSlideMenu = styled.div`
             }
 
             img {
+                object-fit: cover;
                 width: 70px;
                 height: 70px;
                 border-radius: 50%;

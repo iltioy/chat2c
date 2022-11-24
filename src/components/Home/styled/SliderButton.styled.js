@@ -15,11 +15,16 @@ export const StyledSliderButton = styled.div`
         &:hover {
             background: #2e373f;
         }
+        &:hover .sliderButtonInput {
+            background: #2e373f !important;
+        }
     }
     .innerDiv {
         word-wrap: break-word;
         display: flex;
         align-items: center;
+        width: 100%;
+        height: 100%;
 
         .icon {
             width: 20px;
@@ -33,6 +38,28 @@ export const StyledSliderButton = styled.div`
         .buttonText {
             margin: 2px 0 0 7px;
             max-width: 253px;
+        }
+        .sliderButtonInputDiv {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .sliderButtonInput {
+                height: 80%;
+                outline: none;
+                border: 0;
+                background: #282e33;
+                width: 95%;
+                transition: 0.1s;
+                color: white;
+                font-size: 20px;
+                cursor: pointer;
+
+                &:focus {
+                    cursor: auto;
+                }
+            }
         }
     }
 `;

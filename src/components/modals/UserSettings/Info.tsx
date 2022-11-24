@@ -7,14 +7,112 @@ import { switchUserSettings } from "../../../features/modalHandles/modalSlice";
 import { useAppDispatch } from "../../../store/store";
 import SliderButton from "../../Home/SliderButton";
 import { user } from "../../../features/auth/authTypes";
+import { updateUserInfo } from "../../../features/auth/authSlice";
+import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 
 interface Props {
     setSite: React.Dispatch<React.SetStateAction<string>>;
     user: user;
+    token: string;
 }
 
-const Info: React.FC<Props> = ({ setSite, user }) => {
+const Info: React.FC<Props> = ({ setSite, user, token }) => {
     const dispatch = useAppDispatch();
+
+    const [bio, setBio] = useState(user.bio);
+    const bioRef = useRef(bio);
+
+    const [name, setName] = useState(user.name);
+    const [username, setUsername] = useState(user.username);
+
+    const handleImageChange = async (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        if (!e.target.files || e.target.files.length <= 0) {
+            return;
+        }
+
+        const selectedFile = e.target.files[0];
+        const fileType = selectedFile.type;
+        const fileSize = selectedFile.size;
+        if (
+            !(
+                fileType === "image/png" ||
+                fileType === "image/jpeg" ||
+                fileType === "image/jpg"
+            ) ||
+            fileSize > 1024 * 1024 * 10
+        ) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+
+        try {
+            const res = await axios.patch("/api/v1/user/image", formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (res.data.img) {
+                dispatch(updateUserInfo({ img: res.data.img }));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const updateProfile = async (bioArg: string) => {
+        try {
+            const res = await axios.patch(
+                "/api/v1/user/update",
+                {
+                    bio: bioArg,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (res.data.user) {
+                const user = res.data.user;
+                dispatch(
+                    updateUserInfo({
+                        name: user.name,
+                        username: user.username,
+                        bio: user.bio,
+                    })
+                );
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        bioRef.current = bio;
+
+        const updateTimer = setTimeout(() => {
+            updateProfile(bioRef.current);
+        }, 2000);
+
+        return () => {
+            clearTimeout(updateTimer);
+        };
+        // eslint-disable-next-line
+    }, [bio]);
+
+    useEffect(() => {
+        return () => {
+            updateProfile(bioRef.current);
+        };
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <div className="settingsWrapper settingsWrapperInfo">
@@ -35,7 +133,17 @@ const Info: React.FC<Props> = ({ setSite, user }) => {
                     </div>
                 </div>
                 <div className="imageDiv flex column">
-                    <img src={user.img} alt="" />
+                    <label htmlFor="userFile">
+                        <img src={user.img} alt="" />
+                    </label>
+                    <input
+                        onChange={(e) => handleImageChange(e)}
+                        type="file"
+                        id="userFile"
+                        name="userFile"
+                        style={{ display: "none" }}
+                        accept="image/png, image/gif, image/jpeg, image/jpg"
+                    />
                     <div className="name">{user.name}</div>
                     <div className="online">last active..</div>
                 </div>
@@ -45,16 +153,32 @@ const Info: React.FC<Props> = ({ setSite, user }) => {
                         name=""
                         id=""
                         placeholder="Bio"
+                        value={bio}
+                        onChange={(e) => setBio(e.target.value)}
                     ></input>
                 </div>
 
-                <SliderButton Icon={BiUser} iconBackground="#56B3F5">
+                <SliderButton
+                    input
+                    placeholder="Name"
+                    Icon={BiUser}
+                    iconBackground="#56B3F5"
+                    value={name}
+                    setValue={setName}
+                >
                     Имя
                 </SliderButton>
                 <SliderButton Icon={ImPhone} iconBackground="#6DC534">
                     Телефонный Номер
                 </SliderButton>
-                <SliderButton Icon={SiMaildotru} iconBackground="orange">
+                <SliderButton
+                    input
+                    placeholder="@username"
+                    value={username}
+                    Icon={SiMaildotru}
+                    iconBackground="orange"
+                    setValue={setUsername}
+                >
                     Имя пользователя
                 </SliderButton>
             </div>

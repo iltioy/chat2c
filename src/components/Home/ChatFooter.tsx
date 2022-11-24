@@ -1,6 +1,6 @@
 import { BiSend } from "react-icons/bi";
 import { HiOutlinePaperClip } from "react-icons/hi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as io from "socket.io-client";
 interface Props {
     id: string | undefined;

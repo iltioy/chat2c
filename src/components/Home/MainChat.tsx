@@ -14,7 +14,6 @@ const Message: React.FC<MessageProps> = ({
     messageUserId,
     mainUserId,
 }) => {
-    console.log(messageUserId, mainUserId);
     return (
         <div
             className={`messageDiv  ${

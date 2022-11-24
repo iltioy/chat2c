@@ -6,15 +6,15 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { login } from "../features/auth/authSlice";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+// import { useState } from "react";
 
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [error, setError] = useState("");
+    // const [error, setError] = useState("");
 
-    const { handleSubmit, handleChange, values, errors } = useFormik({
+    const { handleSubmit, handleChange, values } = useFormik({
         initialValues: {
             username: "",
             password: "",
@@ -31,7 +31,7 @@ const Login = () => {
             if (!res.error) {
                 navigate("/chat/0");
             } else {
-                setError(res.error);
+                // setError(res.error);
             }
         },
     });

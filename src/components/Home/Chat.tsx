@@ -40,8 +40,6 @@ interface AllChatUsers {
     chatUser: ChatUser;
 }
 
-var count = 0;
-
 // var allMessages: { [key: string]: any[] } = {};
 
 const Chat: React.FC<Props> = ({ isSmall, chatClosed, id, token, socket }) => {
@@ -68,6 +66,7 @@ const Chat: React.FC<Props> = ({ isSmall, chatClosed, id, token, socket }) => {
         if (id !== "0") {
             socket.emit("join_chat", { chatId: id, token });
         }
+        // eslint-disable-next-line
     }, [id]);
 
     useEffect(() => {
@@ -101,11 +100,13 @@ const Chat: React.FC<Props> = ({ isSmall, chatClosed, id, token, socket }) => {
                 ];
             });
         });
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
         fetchMessages();
         fetchChatUser();
+        // eslint-disable-next-line
     }, [token, id]);
 
     // useEffect(() => {

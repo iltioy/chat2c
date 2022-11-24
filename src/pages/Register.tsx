@@ -6,15 +6,15 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import * as Yup from "yup";
 import "../styles/register/register.css";
-import { useState } from "react";
+// import { useState } from "react";
 
 const Register = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [error, setError] = useState();
+    // const [error, setError] = useState();
 
-    const { handleSubmit, handleChange, values, errors } = useFormik({
+    const { handleSubmit, handleChange, values } = useFormik({
         initialValues: {
             username: "",
             password: "",
@@ -50,7 +50,7 @@ const Register = () => {
             if (!res.error) {
                 navigate("/chat/0");
             } else {
-                setError(res.error);
+                // setError(res.error);
             }
         },
     });

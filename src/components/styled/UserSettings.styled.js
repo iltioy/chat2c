@@ -26,11 +26,14 @@ export const StyledUserSettings = styled.div`
                 color: white;
                 padding: 12px;
                 margin-top: 10px;
+                width: 90%;
             }
 
             .descInputDiv {
                 border-bottom: 10px solid ${greyBorder};
                 margin-bottom: 5px;
+                display: flex;
+                align-items: center;
             }
 
             .upper {
@@ -79,9 +82,11 @@ export const StyledUserSettings = styled.div`
                 }
             }
             img {
+                object-fit: cover;
                 width: 120px;
                 height: 120px;
                 border-radius: 50%;
+                cursor: pointer;
             }
         }
     }
@@ -117,6 +122,7 @@ export const StyledUserSettings = styled.div`
             .lower {
                 display: flex;
                 img {
+                    object-fit: cover;
                     width: 70px;
                     height: 70px;
                     border-radius: 50%;

@@ -9,6 +9,7 @@ const initialState: authState = {
         name: "name",
         img: "user.png",
         userId: "",
+        bio: "",
     },
     isLoaded: false,
 };
@@ -70,6 +71,20 @@ const authSlice = createSlice({
             state.user = initialState.user;
             localStorage.removeItem("token");
         },
+        updateUserInfo: (state, { payload }) => {
+            if (payload.img) {
+                state.user.img = payload.img;
+            }
+            if (payload.name) {
+                state.user.name = payload.name;
+            }
+            if (payload.bio) {
+                state.user.bio = payload.bio;
+            }
+            if (payload.username) {
+                state.user.username = payload.username;
+            }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state: authState, body) => {
@@ -99,5 +114,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, updateUserInfo } = authSlice.actions;
 export default authSlice.reducer;

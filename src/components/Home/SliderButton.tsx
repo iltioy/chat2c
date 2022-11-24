@@ -1,5 +1,4 @@
 import { StyledSliderButton } from "./styled/SliderButton.styled";
-import { IoMdSettings } from "react-icons/io";
 import { IconType } from "react-icons";
 
 interface Props {
@@ -7,6 +6,10 @@ interface Props {
     Icon: IconType;
     iconBackground?: string;
     iconColor?: string;
+    input?: boolean;
+    placeholder?: string;
+    value?: string;
+    setValue?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SliderButton: React.FC<Props> = ({
@@ -14,6 +17,10 @@ const SliderButton: React.FC<Props> = ({
     Icon,
     iconBackground,
     iconColor,
+    input,
+    placeholder,
+    value,
+    setValue,
 }) => {
     return (
         <StyledSliderButton
@@ -23,7 +30,21 @@ const SliderButton: React.FC<Props> = ({
             <div className="buttonWrapper">
                 <div className="innerDiv">
                     <Icon className="icon" />
-                    <div className="buttonText">{children}</div>
+
+                    {input && setValue ? (
+                        <div className="sliderButtonInputDiv">
+                            <input
+                                value={value}
+                                placeholder={placeholder}
+                                onChange={(e) => {
+                                    setValue(e.target.value);
+                                }}
+                                className="sliderButtonInput"
+                            />
+                        </div>
+                    ) : (
+                        <div className="buttonText">{children}</div>
+                    )}
                 </div>
             </div>
         </StyledSliderButton>

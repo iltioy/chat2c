@@ -51,6 +51,7 @@ export const StyledUserList = styled.div`
             align-items: center;
             margin-left: 5px;
             img {
+                object-fit: cover;
                 height: 53px;
                 width: 53px;
                 border-radius: 50%;
