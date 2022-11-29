@@ -1,8 +1,9 @@
 interface chatUser {
-    _id: string;
+    userId: string;
     name: string;
     username: string;
     img: string;
+    bio: string;
 }
 
 export interface ChatType {

@@ -7,12 +7,14 @@ interface MessageProps {
     body: string;
     messageUserId: string;
     mainUserId: string;
+    image: string | null;
 }
 
 const Message: React.FC<MessageProps> = ({
     body,
     messageUserId,
     mainUserId,
+    image,
 }) => {
     return (
         <div
@@ -20,7 +22,15 @@ const Message: React.FC<MessageProps> = ({
                 messageUserId === mainUserId ? "my-message" : "not-my-message"
             }`}
         >
-            <div className="message">{body}</div>
+            <div className="message">
+                {body}{" "}
+                {image ? (
+                    <img
+                        src={`/api/v1/chat/message/image/${image}`}
+                        alt="Не найдено"
+                    />
+                ) : null}
+            </div>
         </div>
     );
 };
@@ -42,12 +52,15 @@ const MainChat: React.FC<MainChatProps> = ({ messages }) => {
         <div className="mainChatDiv">
             <div ref={scrollRef}></div>
             {messages.map((message) => {
+                const image = message.imageKEY ? message.imageKEY : null;
+
                 return (
                     <Message
                         body={message.body}
                         key={message._id}
                         messageUserId={message.userId}
                         mainUserId={userId}
+                        image={image}
                     />
                 );
             })}

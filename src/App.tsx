@@ -10,6 +10,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import { getUserInfo } from "./features/auth/authSlice";
 import { useAppDispatch } from "./store/store";
+import Crop from "./components/modals/Crop/Crop";
+import Test from "./pages/Test";
 
 function App() {
     const { pathname }: Location = useLocation();
@@ -39,6 +41,7 @@ function App() {
                 <Route path="/chat/:id" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/test" element={<Test />} />
             </Routes>
         </div>
     );

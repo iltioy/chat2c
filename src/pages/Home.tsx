@@ -1,7 +1,7 @@
 import "../styles/home/homePage.css";
 import Chat from "../components/Home/Chat";
 import UserList from "../components/Home/UserList";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import SlideMenu from "../components/Home/SlideMenu";
 import UserSettings from "../components/modals/UserSettings/UserSettings";
 import CreateChat from "../components/modals/CreateChat/CreateChat";
@@ -12,13 +12,21 @@ import { RootState } from "../store/store";
 import { ChatType } from "../types";
 import _ from "lodash";
 import * as io from "socket.io-client";
+import Crop from "../components/modals/Crop/Crop";
+import { sendUserProfileImage } from "../utils/actions";
+import UserInfo from "../components/modals/UserInfo/UserInfo";
 const socket = io.connect("http://localhost:5000");
 
 const Home: React.FC = () => {
     const { id } = useParams();
     const { token } = useSelector((state: RootState) => state.auth);
+    const { cropImageActive, userInfo } = useSelector(
+        (state: RootState) => state.modal
+    );
+    const navigate = useNavigate();
 
     const [chats, setChats] = useState<ChatType[] | []>([]);
+    const [cropFile, setCropFile] = useState<File | null | undefined>(null);
     useEffect(() => {
         socket.emit("join_personal_room", { token });
         socket.on("recieve_chat", ({ chat }) => {
@@ -51,6 +59,9 @@ const Home: React.FC = () => {
     };
     useEffect(() => {
         getAllChats();
+        if (token === "") {
+            navigate("/login");
+        }
         // eslint-disable-next-line
     }, [token]);
 
@@ -60,8 +71,16 @@ const Home: React.FC = () => {
 
     return (
         <div className="homePageWrapper">
-            <div className="flex row homePage">
-                <UserSettings />
+            <div className="flex row homePage" id="home">
+                {cropImageActive && cropFile ? (
+                    <Crop
+                        cropFile={cropFile}
+                        imageURL={URL.createObjectURL(cropFile)}
+                        actionOnCrop={sendUserProfileImage}
+                    />
+                ) : null}
+                {userInfo.active ? <UserInfo /> : null}
+                <UserSettings setCropFile={setCropFile} />
                 <CreateChat token={token} setChats={setChats} socket={socket} />
                 <SlideMenu />
                 <UserList
@@ -70,6 +89,8 @@ const Home: React.FC = () => {
                     chats={chats}
                 />
                 <Chat
+                    setAllChats={setChats}
+                    allChats={chats}
                     token={token}
                     id={id}
                     isSmall={isSmall}

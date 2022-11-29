@@ -36,11 +36,17 @@ export const StyledUserList = styled.div`
         cursor: pointer;
         display: flex;
 
-        .name {
+        .singleChatInfo {
             margin-top: 8px;
             margin-left: 9px;
             font-weight: bold;
             font-size: 18px;
+
+            .lastMessage {
+                font-size: 14px;
+                margin-top: 5px;
+                color: #ccc;
+            }
         }
 
         .imageWrapper {

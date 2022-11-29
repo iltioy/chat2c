@@ -1,4 +1,4 @@
-export interface user {
+export interface userType {
     username: string;
     name: string;
     img: string;
@@ -8,7 +8,7 @@ export interface user {
 
 export interface authState {
     token: string;
-    user: user;
+    user: userType;
     isLoaded: boolean;
 }
 

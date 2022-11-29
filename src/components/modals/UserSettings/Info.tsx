@@ -6,18 +6,20 @@ import { SiMaildotru } from "react-icons/si";
 import { switchUserSettings } from "../../../features/modalHandles/modalSlice";
 import { useAppDispatch } from "../../../store/store";
 import SliderButton from "../../Home/SliderButton";
-import { user } from "../../../features/auth/authTypes";
+import { userType } from "../../../features/auth/authTypes";
 import { updateUserInfo } from "../../../features/auth/authSlice";
 import { useState, useEffect, useRef } from "react";
+import { switchCropImageActive } from "../../../features/modalHandles/modalSlice";
 import axios from "axios";
 
 interface Props {
     setSite: React.Dispatch<React.SetStateAction<string>>;
-    user: user;
+    user: userType;
     token: string;
+    setCropFile: React.Dispatch<React.SetStateAction<File | null | undefined>>;
 }
 
-const Info: React.FC<Props> = ({ setSite, user, token }) => {
+const Info: React.FC<Props> = ({ setSite, user, token, setCropFile }) => {
     const dispatch = useAppDispatch();
 
     const [bio, setBio] = useState(user.bio);
@@ -25,6 +27,8 @@ const Info: React.FC<Props> = ({ setSite, user, token }) => {
 
     const [name, setName] = useState(user.name);
     const [username, setUsername] = useState(user.username);
+
+    const fileInput = useRef<HTMLInputElement>(null);
 
     const handleImageChange = async (
         e: React.ChangeEvent<HTMLInputElement>
@@ -47,22 +51,29 @@ const Info: React.FC<Props> = ({ setSite, user, token }) => {
             return;
         }
 
-        const formData = new FormData();
-        formData.append("image", selectedFile);
+        setCropFile(selectedFile);
+        dispatch(switchCropImageActive());
 
-        try {
-            const res = await axios.patch("/api/v1/user/image", formData, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-            if (res.data.img) {
-                dispatch(updateUserInfo({ img: res.data.img }));
-            }
-        } catch (error) {
-            console.log(error);
+        if (fileInput.current) {
+            fileInput.current.value = "";
         }
+
+        // const formData = new FormData();
+        // formData.append("image", selectedFile);
+
+        // try {
+        //     const res = await axios.patch("/api/v1/user/image", formData, {
+        //         headers: {
+        //             Authorization: `Bearer ${token}`,
+        //         },
+        //     });
+
+        //     if (res.data.img) {
+        //         dispatch(updateUserInfo({ img: res.data.img }));
+        //     }
+        // } catch (error) {
+        //     console.log(error);
+        // }
     };
 
     const updateProfile = async (bioArg: string) => {
@@ -115,74 +126,80 @@ const Info: React.FC<Props> = ({ setSite, user, token }) => {
     }, []);
 
     return (
-        <div className="settingsWrapper settingsWrapperInfo">
-            <div className="topper flex column">
-                <div className="upper">
-                    <div className="iconDiv" onClick={() => setSite("main")}>
-                        <BiArrowBack className="icon" />
+        <>
+            <div className="settingsWrapper settingsWrapperInfo">
+                <div className="topper flex column">
+                    <div className="upper">
+                        <div
+                            className="iconDiv"
+                            onClick={() => setSite("main")}
+                        >
+                            <BiArrowBack className="icon" />
+                        </div>
+                        <div className="text">Профиль</div>
+                        <div
+                            className="iconDiv end"
+                            onClick={() => {
+                                dispatch(switchUserSettings());
+                                setSite("main");
+                            }}
+                        >
+                            <AiOutlineClose className="icon" />
+                        </div>
                     </div>
-                    <div className="text">Профиль</div>
-                    <div
-                        className="iconDiv end"
-                        onClick={() => {
-                            dispatch(switchUserSettings());
-                            setSite("main");
-                        }}
-                    >
-                        <AiOutlineClose className="icon" />
+                    <div className="imageDiv flex column">
+                        <label htmlFor="userFile">
+                            <img src={user.img} alt="" />
+                        </label>
+                        <input
+                            onChange={(e) => handleImageChange(e)}
+                            ref={fileInput}
+                            type="file"
+                            id="userFile"
+                            name="userFile"
+                            style={{ display: "none" }}
+                            accept="image/png, image/gif, image/jpeg, image/jpg"
+                        />
+                        <div className="name">{user.name}</div>
+                        <div className="online">last active..</div>
                     </div>
-                </div>
-                <div className="imageDiv flex column">
-                    <label htmlFor="userFile">
-                        <img src={user.img} alt="" />
-                    </label>
-                    <input
-                        onChange={(e) => handleImageChange(e)}
-                        type="file"
-                        id="userFile"
-                        name="userFile"
-                        style={{ display: "none" }}
-                        accept="image/png, image/gif, image/jpeg, image/jpg"
-                    />
-                    <div className="name">{user.name}</div>
-                    <div className="online">last active..</div>
-                </div>
-                <div className="descInputDiv">
-                    <input
-                        className="descInput"
-                        name=""
-                        id=""
-                        placeholder="Bio"
-                        value={bio}
-                        onChange={(e) => setBio(e.target.value)}
-                    ></input>
-                </div>
+                    <div className="descInputDiv">
+                        <input
+                            className="descInput"
+                            name=""
+                            id=""
+                            placeholder="Bio"
+                            value={bio}
+                            onChange={(e) => setBio(e.target.value)}
+                        ></input>
+                    </div>
 
-                <SliderButton
-                    input
-                    placeholder="Name"
-                    Icon={BiUser}
-                    iconBackground="#56B3F5"
-                    value={name}
-                    setValue={setName}
-                >
-                    Имя
-                </SliderButton>
-                <SliderButton Icon={ImPhone} iconBackground="#6DC534">
-                    Телефонный Номер
-                </SliderButton>
-                <SliderButton
-                    input
-                    placeholder="@username"
-                    value={username}
-                    Icon={SiMaildotru}
-                    iconBackground="orange"
-                    setValue={setUsername}
-                >
-                    Имя пользователя
-                </SliderButton>
+                    <SliderButton
+                        input
+                        placeholder="Name"
+                        Icon={BiUser}
+                        iconBackground="#56B3F5"
+                        value={name}
+                        setValue={setName}
+                    >
+                        Имя
+                    </SliderButton>
+                    <SliderButton Icon={ImPhone} iconBackground="#6DC534">
+                        Телефонный Номер
+                    </SliderButton>
+                    <SliderButton
+                        input
+                        placeholder="@username"
+                        value={username}
+                        Icon={SiMaildotru}
+                        iconBackground="orange"
+                        setValue={setUsername}
+                    >
+                        Имя пользователя
+                    </SliderButton>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

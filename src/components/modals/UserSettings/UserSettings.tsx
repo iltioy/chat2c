@@ -3,11 +3,15 @@ import Modal from "../Modal";
 import { switchUserSettings } from "../../../features/modalHandles/modalSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { StyledUserSettings } from "../../styled/UserSettings.styled";
+import { StyledUserModal } from "../../styled/UserModal.styled";
 import Main from "./Main";
 import Info from "./Info";
 
-const UserSettings = () => {
+interface UserSettingsProps {
+    setCropFile: React.Dispatch<React.SetStateAction<File | null | undefined>>;
+}
+
+const UserSettings: React.FC<UserSettingsProps> = ({ setCropFile }) => {
     const { userSettingsActive } = useSelector(
         (state: RootState) => state.modal
     );
@@ -18,13 +22,21 @@ const UserSettings = () => {
 
     const sites = new Map([
         ["main", <Main setSite={setSite} user={user} />],
-        ["info", <Info setSite={setSite} user={user} token={token} />],
+        [
+            "info",
+            <Info
+                setSite={setSite}
+                user={user}
+                token={token}
+                setCropFile={setCropFile}
+            />,
+        ],
     ]);
 
     return (
         <>
             {userSettingsActive ? (
-                <StyledUserSettings>
+                <StyledUserModal>
                     <>
                         <Modal
                             className="modalDiv higherModal"
@@ -33,7 +45,7 @@ const UserSettings = () => {
 
                         {sites.get(site)}
                     </>
-                </StyledUserSettings>
+                </StyledUserModal>
             ) : null}
         </>
     );

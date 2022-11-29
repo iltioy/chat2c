@@ -2,12 +2,12 @@ import React from "react";
 import { BiUserCircle } from "react-icons/bi";
 import { CiLock } from "react-icons/ci";
 import { FaGlobe } from "react-icons/fa";
-import { user } from "../../../features/auth/authTypes";
+import { userType } from "../../../features/auth/authTypes";
 import SliderButton from "../../Home/SliderButton";
 
 interface Props {
     setSite: React.Dispatch<React.SetStateAction<string>>;
-    user: user;
+    user: userType;
 }
 
 const Main: React.FC<Props> = ({ setSite, user }) => {

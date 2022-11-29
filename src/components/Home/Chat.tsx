@@ -5,6 +5,9 @@ import axios from "axios";
 import ChatFooter from "./ChatFooter";
 import * as io from "socket.io-client";
 import _ from "lodash";
+import { ChatType } from "../../types";
+import { setUserInfo } from "../../features/modalHandles/modalSlice";
+import { useDispatch } from "react-redux";
 
 interface Props {
     isSmall: boolean;
@@ -12,6 +15,8 @@ interface Props {
     id: string | undefined;
     token: string;
     socket: io.Socket;
+    allChats: [] | ChatType[];
+    setAllChats: React.Dispatch<React.SetStateAction<[] | ChatType[]>>;
 }
 
 export interface Messages {
@@ -21,13 +26,15 @@ export interface Messages {
     chatId: string;
     createdAt: string;
     _id: string;
+    imageKEY?: null | string;
 }
 
 interface ChatUser {
+    userId: string;
     username: string;
     name: string;
-    email: string;
     img: string;
+    bio: string;
 }
 
 interface AllMessagesType {
@@ -35,32 +42,35 @@ interface AllMessagesType {
     messages: Messages[];
 }
 
-interface AllChatUsers {
-    id: string;
-    chatUser: ChatUser;
-}
+// interface AllChatUsers {
+//     id: string;
+//     chatUser: ChatUser;
+// }
 
-// var allMessages: { [key: string]: any[] } = {};
-
-const Chat: React.FC<Props> = ({ isSmall, chatClosed, id, token, socket }) => {
+const Chat: React.FC<Props> = ({
+    isSmall,
+    chatClosed,
+    id,
+    token,
+    socket,
+    allChats,
+    setAllChats,
+}) => {
     const defaultUser = {
+        userId: "",
         username: "",
         name: "",
-        email: "",
         img: "",
+        bio: "",
     };
-    // const defaultMessages: [] = [];
 
     const [allMessages, setAllMessages] = useState<AllMessagesType[] | []>([]);
-    const [allChatUsers, setAllChatUsers] = useState<AllChatUsers[] | []>([]);
+    // const [allChatUsers, setAllChatUsers] = useState<AllChatUsers[] | []>([]);
 
-    // const [currentMessages, setCurrentMessages] = useState<Messages[] | []>(
-    //     id
-    //         ? allMessages[id]
-    //             ? allMessages[id]
-    //             : defaultMessages
-    //         : defaultMessages
-    // );
+    const [currentChatUser, setCurrentChatUser] =
+        useState<ChatUser>(defaultUser);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (id !== "0") {
@@ -68,6 +78,14 @@ const Chat: React.FC<Props> = ({ isSmall, chatClosed, id, token, socket }) => {
         }
         // eslint-disable-next-line
     }, [id]);
+
+    useEffect(() => {
+        const chat = allChats.filter((chat) => chat._id === id)[0];
+        if (chat && chat.user) {
+            setCurrentChatUser(chat.user);
+            console.log(chat.user);
+        }
+    }, [allChats, id]);
 
     useEffect(() => {
         socket.on("recieve_message", ({ message }) => {
@@ -99,23 +117,31 @@ const Chat: React.FC<Props> = ({ isSmall, chatClosed, id, token, socket }) => {
                     },
                 ];
             });
+
+            setAllChats((prevState) => {
+                const newState = prevState.filter(
+                    (item) => item._id !== message.chatId
+                );
+                var upChat = prevState.filter(
+                    (item) => item._id === message.chatId
+                )[0];
+                upChat.lastMessage = message.body;
+                if (!upChat || !newState) {
+                    return [...prevState];
+                }
+
+                return [upChat, ...newState];
+            });
         });
         // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
         fetchMessages();
-        fetchChatUser();
+        // fetchChatUser();
         // eslint-disable-next-line
     }, [token, id]);
 
-    // useEffect(() => {
-    //     if (id) {
-    //         if (allMessages[id]) {
-    //             setCurrentMessages(allMessages[id]);
-    //         }
-    //     }
-    // }, [id]);
     const fetchMessages = async () => {
         try {
             if (id && id !== "0") {
@@ -135,52 +161,52 @@ const Chat: React.FC<Props> = ({ isSmall, chatClosed, id, token, socket }) => {
                         },
                     ];
                 });
-                // if (id) {
-                //     allMessages[id] = res.data.messages;
-                // }
-
-                // setCurrentMessages(allMessages[id]);
             }
         } catch (error) {
             console.log(error);
         }
     };
 
-    const fetchChatUser = async () => {
-        try {
-            if (id && id !== "0") {
-                const res = await axios.get(`/api/v1/chat/user/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+    // const fetchChatUser = async () => {
+    //     try {
+    //         if (id && id !== "0") {
+    //             const res = await axios.get(`/api/v1/chat/user/${id}`, {
+    //                 headers: {
+    //                     Authorization: `Bearer ${token}`,
+    //                 },
+    //             });
 
-                setAllChatUsers([
-                    ...allChatUsers,
-                    {
-                        id,
-                        chatUser: res.data.user,
-                    },
-                ]);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    //             setAllChatUsers([
+    //                 ...allChatUsers,
+    //                 {
+    //                     id,
+    //                     chatUser: res.data.user,
+    //                 },
+    //             ]);
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
+
+    if (id === "0" && !isSmall) {
+        return (
+            <div className="chatPlaceholder">
+                Выберите чат для началa общения или начните новый!
+            </div>
+        );
+    }
 
     return (
         <StyledChat display={chatClosed ? "none" : "flex"}>
             <div className="topper">
-                <div className="wrap">
-                    <div>
-                        {allChatUsers.filter(
-                            (chatUser) => chatUser.id === id
-                        )[0]
-                            ? allChatUsers.filter(
-                                  (chatUser) => chatUser.id === id
-                              )[0].chatUser.name
-                            : defaultUser.name}
-                    </div>
+                <div
+                    className="wrap"
+                    onClick={() =>
+                        dispatch(setUserInfo({ user: currentChatUser }))
+                    }
+                >
+                    <div>{currentChatUser ? currentChatUser.name : null}</div>
                     <div className="lastActive">Last Active</div>
                 </div>
             </div>

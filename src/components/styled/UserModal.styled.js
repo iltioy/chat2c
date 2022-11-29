@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const greyBorder = "#303a42";
 
-export const StyledUserSettings = styled.div`
+export const StyledUserModal = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
@@ -152,5 +152,9 @@ export const StyledUserSettings = styled.div`
             display: flex;
             flex-direction: column;
         }
+    }
+
+    .infoImageCrop {
+        width: 90%;
     }
 `;

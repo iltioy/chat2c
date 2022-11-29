@@ -5,6 +5,7 @@ export interface MessagesType {
     chatId: string;
     createdAt: string;
     _id: string;
+    imageKEY?: null | string;
 }
 
 interface ChatUser {

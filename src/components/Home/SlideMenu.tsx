@@ -11,6 +11,8 @@ import { useAppDispatch } from "../../store/store";
 import { switchUserSettings } from "../../features/modalHandles/modalSlice";
 import { IoMdSettings } from "react-icons/io";
 import { HiUsers } from "react-icons/hi";
+import { IoExitOutline } from "react-icons/io5";
+import { logout } from "../../features/auth/authSlice";
 
 const SlideMenu = () => {
     const dispatch = useAppDispatch();
@@ -46,6 +48,18 @@ const SlideMenu = () => {
                             Icon={IoMdSettings}
                         >
                             Настройки
+                        </SliderButton>
+                    </div>
+                    <div
+                        onClick={() => {
+                            dispatch(logout());
+                        }}
+                    >
+                        <SliderButton
+                            Icon={IoExitOutline}
+                            iconBackground="#ff2400"
+                        >
+                            Выйти
                         </SliderButton>
                     </div>
                 </div>

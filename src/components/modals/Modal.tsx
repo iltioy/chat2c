@@ -6,7 +6,9 @@ interface Props {
     actionOnDispatch?:
         | ActionCreatorWithoutPayload<"modal/switchSlideMenu">
         | ActionCreatorWithoutPayload<"modal/switchUserSettings">
-        | ActionCreatorWithoutPayload<"modal/siwtchCreateChat">;
+        | ActionCreatorWithoutPayload<"modal/siwtchCreateChat">
+        | ActionCreatorWithoutPayload<"modal/switchCropImageActive">
+        | ActionCreatorWithoutPayload<"modal/switchUserInfoActive">;
     className?: string;
 }
 
@@ -18,7 +20,9 @@ const Modal: React.FC<Props> = ({ actionOnDispatch, className }) => {
         return ReactDOM.createPortal(
             <div
                 className={`${className}`}
-                onClick={() => dispatch(actionOnDispatch())}
+                onClick={() => {
+                    dispatch(actionOnDispatch());
+                }}
             ></div>,
             portalContainer
         );
