@@ -62,6 +62,21 @@ export const getUserInfo: any = createAsyncThunk(
     }
 );
 
+export const getTokenByCreds: any = createAsyncThunk(
+    "auth/getTokenByCreds",
+    async (_, thunkAPI) => {
+        try {
+            const res = await axios.get("/api/v1/auth/getToken", {
+                withCredentials: true,
+            });
+
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue("Failed to get token.");
+        }
+    }
+);
+
 const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -96,6 +111,10 @@ const authSlice = createSlice({
             state.token = "";
             state.user = initialState.user;
         });
+        builder.addCase(getTokenByCreds.rejected, (state: authState) => {
+            state.token = "";
+            state.user = initialState.user;
+        });
         builder.addCase(
             getUserInfo.fulfilled,
             (state: authState, { payload }) => {
@@ -111,6 +130,14 @@ const authSlice = createSlice({
             state.user = payload.user;
             localStorage.setItem("token", payload.token);
         });
+        builder.addCase(
+            getTokenByCreds.fulfilled,
+            (state: authState, { payload }) => {
+                state.token = payload.response.token;
+                state.user = payload.response.user;
+                localStorage.setItem("token", payload.response.token);
+            }
+        );
     },
 });
 

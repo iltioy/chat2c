@@ -63,6 +63,7 @@ export const StyledChat = styled.div`
                 background: #363636;
                 word-wrap: break-word;
                 max-width: 35%;
+                min-width: 10%;
                 padding: 10px 7px 5px 7px;
                 border-radius: 10px;
                 margin: 8px 0;

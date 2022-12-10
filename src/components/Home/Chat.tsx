@@ -83,7 +83,6 @@ const Chat: React.FC<Props> = ({
         const chat = allChats.filter((chat) => chat._id === id)[0];
         if (chat && chat.user) {
             setCurrentChatUser(chat.user);
-            console.log(chat.user);
         }
     }, [allChats, id]);
 

@@ -3,6 +3,8 @@ import { useParams } from "react-router";
 import { MessagesType } from "../../features/chat/types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import reactStringReplace from "react-string-replace";
+
 interface MessageProps {
     body: string;
     messageUserId: string;
@@ -23,7 +25,9 @@ const Message: React.FC<MessageProps> = ({
             }`}
         >
             <div className="message">
-                {body}{" "}
+                {reactStringReplace(body, "\n", (match, i) => (
+                    <br />
+                ))}
                 {image ? (
                     <img
                         src={`/api/v1/chat/message/image/${image}`}
@@ -44,7 +48,7 @@ const MainChat: React.FC<MainChatProps> = ({ messages }) => {
     const scrollRef = useRef<HTMLDivElement>(null);
 
     const { userId } = useSelector((state: RootState) => state.auth.user);
-
+    console.log(userId);
     useEffect(() => {
         scrollRef.current?.scrollIntoView();
     }, [scrollRef, id, messages]);

@@ -25,7 +25,7 @@ const Login = () => {
         }),
         validateOnChange: false,
         validateOnBlur: false,
-        onSubmit: async (values) => {
+        onSubmit: async (values: any) => {
             const res = await dispatch(login(values));
 
             if (!res.error) {
@@ -35,6 +35,10 @@ const Login = () => {
             }
         },
     });
+
+    const authViaGoogle = () => {
+        window.open("/api/v1/auth/google", "_self");
+    };
 
     return (
         <div className="loginWrapper rlWrapper">
@@ -77,7 +81,7 @@ const Login = () => {
                         >
                             <button type="submit">Войти</button>
                         </StyledButton>
-                        <div className="oauthBlock">
+                        <div className="oauthBlock" onClick={authViaGoogle}>
                             <FcGoogle className="icon" />
                             <div className="blockText">Продолжить с Google</div>
                         </div>

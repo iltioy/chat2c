@@ -22,7 +22,7 @@ const SingleChat: React.FC<ChatProps> = ({ chName, img, id, cLastMessage }) => {
             <div className="singleChatInfo">
                 <div className="name">{chName}</div>
                 <div className="lastMessage">
-                    {cLastMessage?.substring(0, 20)}
+                    {cLastMessage?.substring(0, 20) + "..."}
                 </div>
             </div>
         </div>
