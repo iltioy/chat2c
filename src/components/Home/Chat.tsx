@@ -124,10 +124,10 @@ const Chat: React.FC<Props> = ({
                 var upChat = prevState.filter(
                     (item) => item._id === message.chatId
                 )[0];
-                upChat.lastMessage = message.body;
                 if (!upChat || !newState) {
                     return [...prevState];
                 }
+                upChat.lastMessage = message.body;
 
                 return [upChat, ...newState];
             });

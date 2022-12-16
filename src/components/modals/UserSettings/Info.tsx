@@ -57,23 +57,6 @@ const Info: React.FC<Props> = ({ setSite, user, token, setCropFile }) => {
         if (fileInput.current) {
             fileInput.current.value = "";
         }
-
-        // const formData = new FormData();
-        // formData.append("image", selectedFile);
-
-        // try {
-        //     const res = await axios.patch("/api/v1/user/image", formData, {
-        //         headers: {
-        //             Authorization: `Bearer ${token}`,
-        //         },
-        //     });
-
-        //     if (res.data.img) {
-        //         dispatch(updateUserInfo({ img: res.data.img }));
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // }
     };
 
     const updateProfile = async (bioArg: string) => {
