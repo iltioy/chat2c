@@ -49,6 +49,7 @@ const ChatFooter: React.FC<Props> = ({
                 console.log(error);
             }
         }
+        console.log(imgKEY);
         socket.emit("send_message", {
             token,
             message: {

@@ -23,10 +23,12 @@ const Info: React.FC<Props> = ({ setSite, user, token, setCropFile }) => {
     const dispatch = useAppDispatch();
 
     const [bio, setBio] = useState(user.bio);
-    const bioRef = useRef(bio);
-
     const [name, setName] = useState(user.name);
     const [username, setUsername] = useState(user.username);
+
+    const bioRef = useRef(bio);
+    const nameRef = useRef(name);
+    const usernameRef = useRef(username);
 
     const fileInput = useRef<HTMLInputElement>(null);
 
@@ -59,12 +61,18 @@ const Info: React.FC<Props> = ({ setSite, user, token, setCropFile }) => {
         }
     };
 
-    const updateProfile = async (bioArg: string) => {
+    const updateProfile = async (
+        bioArg: string,
+        nameArg: string,
+        usernameArg: string
+    ) => {
         try {
             const res = await axios.patch(
                 "/api/v1/user/update",
                 {
                     bio: bioArg,
+                    name: nameArg,
+                    username: usernameArg,
                 },
                 {
                     headers: {
@@ -90,20 +98,22 @@ const Info: React.FC<Props> = ({ setSite, user, token, setCropFile }) => {
 
     useEffect(() => {
         bioRef.current = bio;
+        nameRef.current = name;
+        usernameRef.current = username;
 
         const updateTimer = setTimeout(() => {
-            updateProfile(bioRef.current);
+            updateProfile(bioRef.current, nameRef.current, usernameRef.current);
         }, 2000);
 
         return () => {
             clearTimeout(updateTimer);
         };
         // eslint-disable-next-line
-    }, [bio]);
+    }, [bio, name, username]);
 
     useEffect(() => {
         return () => {
-            updateProfile(bioRef.current);
+            updateProfile(bioRef.current, nameRef.current, usernameRef.current);
         };
         // eslint-disable-next-line
     }, []);
@@ -143,6 +153,7 @@ const Info: React.FC<Props> = ({ setSite, user, token, setCropFile }) => {
                             style={{ display: "none" }}
                             accept="image/png, image/gif, image/jpeg, image/jpg"
                         />
+
                         <div className="name">{user.name}</div>
                         <div className="online">last active..</div>
                     </div>

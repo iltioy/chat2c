@@ -50,7 +50,9 @@ const MainChat: React.FC<MainChatProps> = ({ messages }) => {
     const { userId } = useSelector((state: RootState) => state.auth.user);
 
     useEffect(() => {
-        scrollRef.current?.scrollIntoView();
+        setTimeout(() => {
+            scrollRef.current?.scrollIntoView();
+        }, 1500);
     }, [scrollRef, id, messages]);
     return (
         <div className="mainChatDiv">
