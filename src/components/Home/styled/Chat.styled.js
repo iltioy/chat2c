@@ -77,6 +77,28 @@ export const StyledChat = styled.div`
         }
     }
 
+    .scrollIconDiv {
+        position: fixed;
+        bottom: 65px;
+        margin-left: 23px;
+        background: #363636;
+        padding: 11px;
+        z-index: 101;
+        display: flex;
+        border-radius: 50%;
+        transition: 1s;
+        cursor: pointer;
+
+        &:hover {
+            background: #2d2d2d;
+        }
+
+        .scrollIcon {
+            height: 17px;
+            width: 17px;
+        }
+    }
+
     .showFooter {
         left: 0;
         right: 0;
