@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
-export const StyledChat = styled.div`
+interface Props {
+    display: string;
+}
+
+export const StyledChat = styled.div<Props>`
     height: 100%;
     flex: 1;
-    display: ${({ display }) => display};
+    display: ${({ display }: any) => display};
     flex-direction: column;
     overflow: auto;
     position: relative;

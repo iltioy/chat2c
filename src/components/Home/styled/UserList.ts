@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const StyledUserList = styled.div`
+interface Props {
+    display: any;
+}
+
+export const StyledUserList = styled.div<Props>`
     max-height: 100%;
     overflow: auto;
     width: 325px;

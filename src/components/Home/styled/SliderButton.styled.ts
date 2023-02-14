@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
-export const StyledSliderButton = styled.div`
+interface Props {
+    iconBackground: any;
+    iconColor: any;
+}
+
+export const StyledSliderButton = styled.div<Props>`
     max-height: 50px;
     max-width: 100%;
     overflow: hidden;

@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
-export const StyledButton = styled.div`
+interface Props {
+    width: any;
+    height: any;
+    background: any;
+    hoverBackground: any;
+}
+
+export const StyledButton = styled.div<Props>`
     button {
         outline: none;
         border: none;
