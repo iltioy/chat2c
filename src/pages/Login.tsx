@@ -72,7 +72,12 @@ const Login = () => {
                             name="password"
                             className="form-input"
                         />
-                        <div className="password-change">Забыли пароль?</div>
+                        <div
+                            className="password-change"
+                            onClick={() => navigate("/recover")}
+                        >
+                            Забыли пароль?
+                        </div>
                         <StyledButton
                             width={86}
                             height={34}

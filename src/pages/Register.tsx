@@ -44,6 +44,7 @@ const Register = () => {
                 register({
                     username: values.username,
                     password: values.password,
+                    email: values.email,
                 })
             );
 

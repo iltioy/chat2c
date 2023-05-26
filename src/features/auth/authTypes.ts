@@ -20,4 +20,5 @@ export interface loginBody {
 export interface registerBody {
     username: string;
     password: string;
+    email: string;
 }

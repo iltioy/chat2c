@@ -1,7 +1,6 @@
 import "./styles/index/index.css";
 import "./styles/pages/pages.css";
 import { Location, NavigateFunction, Route, Routes } from "react-router-dom";
-import axios from "axios";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
@@ -13,6 +12,7 @@ import { getUserInfo } from "./features/auth/authSlice";
 import { useAppDispatch } from "./store/store";
 import { getTokenByCreds } from "./features/auth/authSlice";
 import Test from "./pages/Test";
+import PasswordRecovery from "./pages/PasswordRecovery";
 
 function App() {
     const { pathname }: Location = useLocation();
@@ -55,6 +55,11 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/test" element={<Test />} />
+
+                <Route path="/recover">
+                    <Route index element={<PasswordRecovery />} />
+                    <Route path=":recoveryId?" element={<PasswordRecovery />} />
+                </Route>
             </Routes>
         </div>
     );

@@ -1,0 +1,64 @@
+.page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mainWindow {
+  height: 460px;
+  width: 400px;
+  background-color: #2b2828;
+  position: relative;
+  top: 40%;
+  transform: translateY(-40%);
+  border-radius: 10px;
+  border: 1px solid white;
+  box-shadow: 0px 0px 6px white;
+  display: flex;
+  justify-content: center;
+}
+
+.inner {
+  width: 85%;
+  height: 100%;
+  padding: 40px 10px;
+}
+
+.recoveryText {
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.input {
+  width: 90%;
+  height: 20px;
+  background-color: #373535;
+  box-shadow: 0px 0px 10px #373535;
+  border: none;
+  outline: none;
+  padding: 8px;
+  color: white;
+  border-radius: 7px;
+  font-size: 16px;
+  transition: 0.5s;
+  margin-bottom: 30px;
+}
+
+.button {
+  background-color: #373535;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px black;
+  border: 1px solid #373535;
+  transition: 0.5s;
+  color: white;
+  padding: 6px 10px;
+  font-size: 16px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.button:hover {
+  box-shadow: 0px 0px 5px #cccccc;
+}/*# sourceMappingURL=recovery.css.map */

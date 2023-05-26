@@ -31,11 +31,12 @@ export const login: any = createAsyncThunk(
 
 export const register: any = createAsyncThunk(
     "auth/register",
-    async ({ username, password }: registerBody, thunkAPI) => {
+    async ({ username, password, email }: registerBody, thunkAPI) => {
         try {
             const res = await axios.post("/api/v1/auth/register", {
                 username,
                 password,
+                email,
             });
 
             return res.data;
